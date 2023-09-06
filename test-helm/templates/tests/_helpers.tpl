@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "test-helm.name" -}}
+{{- define "deployment-test.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "test-helm.fullname" -}}
+{{- define "deployment-test.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "test-helm.chart" -}}
+{{- define "deployment-test.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "test-helm.labels" -}}
-helm.sh/chart: {{ include "test-helm.chart" . }}
-{{ include "test-helm.selectorLabels" . }}
+{{- define "deployment-test.labels" -}}
+helm.sh/chart: {{ include "deployment-test.chart" . }}
+{{ include "deployment-test.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "test-helm.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "test-helm.name" . }}
+{{- define "deployment-test.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "deployment-test.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "test-helm.serviceAccountName" -}}
+{{- define "deployment-test.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "test-helm.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "deployment-test.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

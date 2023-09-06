@@ -2,7 +2,15 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-replicaCount: 60
+name: kamp
+
+replicaCount: 1
+
+selector:
+  app: kamp
+
+labels:
+  app: kamp    
 
 image:
   repository: europe-west8-docker.pkg.dev/km1-runcloud/mydocker-art-repo/test-art-demo02:v1
@@ -39,8 +47,11 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 80
+  annotations: 
+    cloud.google.com/neg: '{"ingress": true}'
 
 ingress:
+  name: kamp
   enabled: false
   className: ""
   annotations: 
@@ -56,23 +67,25 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
+
+resources: 
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+  requests:
+   cpu: "250m"
+   memory: "200Mi"
+  limits:
+   cpu: "2"  
+   memory: "1600Mi"
 
-autoscaling:
+horizontalpodautoscaler:
   enabled: false
   minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
+  maxReplicas: 60
+  averageUtilization: 60
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
