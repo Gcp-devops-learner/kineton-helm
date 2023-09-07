@@ -13,7 +13,7 @@ labels:
   app: kamp    
 
 image:
-  repository: europe-west8-docker.pkg.dev/km1-runcloud/mydocker-art-repo/test-art-demo02:v1
+  repository: gcr.io/km1-runcloud/nginx:v2
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -81,11 +81,11 @@ resources:
    cpu: "2"  
    memory: "1600Mi"
 
-horizontalpodautoscaler:
+autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 60
-  averageUtilization: 60
+  //targetCPUUtilizationPercentage: 60
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}

@@ -6,9 +6,14 @@ metadata:
   {{- range $key, $value := .Values.ingress.annotations }}
     {{ $key }}: {{ $value | quote }}
   {{- end }}
-spec:
+spec: 
+  defaultBackend:
+      service:
+        name: kamp
+        port:
+          number: 80
   rules:
-    http:
+  - http:
       paths:
       - path: /*
         pathType: ImplementationSpecific
