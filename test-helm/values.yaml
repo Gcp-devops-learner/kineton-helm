@@ -13,7 +13,7 @@ labels:
   app: kamp    
 
 image:
-  repository: gcr.io/km1-runcloud/nginx:v2
+  repository: europe-west8-docker.pkg.dev/km1-runcloud/charan-nginx/new-nginx:v2
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
